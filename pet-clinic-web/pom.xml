@@ -13,7 +13,7 @@
         <dependency>
             <artifactId>pet-clinic-data</artifactId>
             <groupId>gunsnhoney</groupId>
-            <version>0.0.2</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
 
         <dependency>
