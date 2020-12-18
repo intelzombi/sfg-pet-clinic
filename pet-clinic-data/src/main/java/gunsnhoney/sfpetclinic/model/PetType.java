@@ -1,4 +1,4 @@
-package gunsnhoney.sfgpetclinic.model;
+package gunsnhoney.sfpetclinic.model;
 
 public class PetType {
 
