@@ -10,7 +10,7 @@
     </parent>
     <groupId>gunsnhoney</groupId>
     <artifactId>sfg-pet-clinic</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>sfg-pet-clinic</name>
     <description>Guru Project using Spring Framework and Boot</description>
     <modules>
