@@ -9,6 +9,7 @@
 
     <artifactId>pet-clinic-web</artifactId>
     <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <artifactId>pet-clinic-data</artifactId>
