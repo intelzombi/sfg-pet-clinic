@@ -5,7 +5,23 @@
     <title>List of Vets</title>
 </head>
 <body>
-<h1 th:text="'Vets Index Page from Thymeleaf'">Vets Index</h1>
-<h1 th:text="${needleParty}">the goof ball</h1>
+
+<!--<h1 Vets of th:text=gunsnhoney.sfpetclinic.model.Vet"'List'">Vets Index</h1>-->
+<table>
+    <thread>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+    </thread>
+    <tbody>
+    <tr th:each="vet : ${vets}">
+        <td th:text="${vet.id}">1</td>
+        <td th:text="${vet.firstName}">John</td>
+        <td th:text="${vet.lastName}">Doe</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
