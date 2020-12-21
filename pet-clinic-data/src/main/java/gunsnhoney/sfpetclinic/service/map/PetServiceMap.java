@@ -1,24 +1,24 @@
 package gunsnhoney.sfpetclinic.service.map;
 
-import gunsnhoney.sfpetclinic.model.Person;
-import gunsnhoney.sfpetclinic.service.CrudService;
+import gunsnhoney.sfpetclinic.model.Pet;
+import gunsnhoney.sfpetclinic.service.PetService;
 
 import java.util.Set;
 
-public class PersonServiceMap extends AbstractMapService<Person, Long> implements CrudService<Person, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
 
     @Override
-    public Set<Person> findAll() {
+    public Set<Pet> findAll() {
         return super.findAll();
     }
 
     @Override
-    public void delete(Person object) {
+    public void delete(Pet object) {
         super.delete(object);
     }
 
     @Override
-    public Person save(Person object) {
+    public Pet save(Pet object) {
         return super.save(object.getId(), object);
     }
 
@@ -28,7 +28,7 @@ public class PersonServiceMap extends AbstractMapService<Person, Long> implement
     }
 
     @Override
-    public Person findById(Long id) {
+    public Pet findById(Long id) {
         return super.findById(id);
     }
 }
