@@ -1,6 +1,8 @@
 package gunsnhoney.sfpetclinic.service.map;
 
+import gunsnhoney.sfpetclinic.model.Specialty;
 import gunsnhoney.sfpetclinic.model.Vet;
+import gunsnhoney.sfpetclinic.service.SpecialtyService;
 import gunsnhoney.sfpetclinic.service.VetService;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,12 @@ import java.util.Set;
 
 @Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
+
+    private final SpecialtyService specialtyService;
+
+    public VetServiceMap(SpecialtyService specialtyService) {
+        this.specialtyService = specialtyService;
+    }
 
     @Override
     public Set<Vet> findAll() {
@@ -21,7 +29,21 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
 
     @Override
     public Vet save(Vet object) {
+        if (object != null) {
+            if (object.getSpecialties().isEmpty()) {
+                throw new RuntimeException("Vets must have a specialty");
+            }
+            relsolveSpecialties(object.getSpecialties());
+        }
         return super.save(object);
+    }
+
+    private void relsolveSpecialties(Set<Specialty> specialties) {
+        specialties.forEach(specialty -> {
+            if (specialtyService.findById(specialty.getId()) == null) {
+                specialtyService.save(specialty);
+            }
+        });
     }
 
     @Override

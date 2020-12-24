@@ -1,11 +1,9 @@
 package gunsnhoney.sfpetclinic.bootstrap;
 
-import gunsnhoney.sfpetclinic.model.Owner;
-import gunsnhoney.sfpetclinic.model.Pet;
-import gunsnhoney.sfpetclinic.model.PetType;
-import gunsnhoney.sfpetclinic.model.Vet;
+import gunsnhoney.sfpetclinic.model.*;
 import gunsnhoney.sfpetclinic.service.OwnerService;
 import gunsnhoney.sfpetclinic.service.PetTypeService;
+import gunsnhoney.sfpetclinic.service.SpecialtyService;
 import gunsnhoney.sfpetclinic.service.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,16 +16,30 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialtyService specialtyService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialtyService = specialtyService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        if (petTypeService.findAll().isEmpty()) {
+            loadData();
+        } else {
+            updateData();
+        }
 
+    }
+
+    private void updateData() {
+
+    }
+
+    private void loadData() {
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogType = petTypeService.save(dog);
@@ -75,6 +87,7 @@ public class DataLoader implements CommandLineRunner {
         saraHorse.setName("Winnie");
         saraHorse.setBirthDate(LocalDate.now());
         PetType horse = new PetType();
+        //not Saved to service so we can test
         horse.setName("Horse");
         saraHorse.setType(horse);
         saraHorse.setOwner(sara);
@@ -82,16 +95,33 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(sara);
         System.out.println("Loading Owners ....");
 
-        Vet vet1 = new Vet();
-        vet1.setFirstName("Gary");
-        vet1.setLastName("Palaro");
+        Specialty radiology = new Specialty();
+        radiology.setDescription("Radiology");
+        Specialty saveRadiology = specialtyService.save(radiology);
+        Specialty surgery = new Specialty();
+        surgery.setDescription("Surgery");
+        Specialty saveSurgery = specialtyService.save(surgery);
+        Specialty dentistry = new Specialty();
+        dentistry.setDescription("Dentistry");
+        Specialty saveDentestry = specialtyService.save(dentistry);
+        Specialty oncology = new Specialty();
+        oncology.setDescription("Oncology");
 
-        vetService.save(vet1);
+        Vet drPalaro = new Vet();
+        drPalaro.setFirstName("Gary");
+        drPalaro.setLastName("Palaro");
+        drPalaro.addSpecialty(saveDentestry);
+        drPalaro.addSpecialty(saveSurgery);
+        vetService.save(drPalaro);
 
-        Vet vet2 = new Vet();
-        vet2.setFirstName("Dave");
-        vet2.setLastName("Severs");
-        vetService.save(vet2);
+        Vet drSevers = new Vet();
+        drSevers.setFirstName("Dave");
+        drSevers.setLastName("Severs");
+        drSevers.addSpecialty(saveRadiology);
+        drSevers.addSpecialty(saveSurgery);
+        //Not saved so we can test
+        drSevers.addSpecialty(oncology);
+        vetService.save(drSevers);
 
         System.out.println("Loading Vets .....");
     }

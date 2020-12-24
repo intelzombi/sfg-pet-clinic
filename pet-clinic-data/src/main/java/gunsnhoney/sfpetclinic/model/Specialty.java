@@ -1,13 +1,13 @@
 package gunsnhoney.sfpetclinic.model;
 
 public class Specialty extends BaseEntity {
-    private String descriptionnn;
+    private String description;
 
-    public String getDescriptionnn() {
-        return descriptionnn;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionnn(String descriptionnn) {
-        this.descriptionnn = descriptionnn;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
