@@ -44,8 +44,7 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
     private void resolvePets(Set<Pet> pets) {
         pets.forEach(pet -> {
             if (petTypeService.findById(pet.getType().getId()) == null) {
-                pet.setType(petTypeService.save(pet.getType()));
-
+                pet.getType().setId(petTypeService.save(pet.getType()).getId());
             }
             if (pet.getId() == null) {
                 petService.save(pet);
