@@ -1,6 +1,7 @@
 package gunsnhoney.sfpetclinic.bootstrap;
 
 import gunsnhoney.sfpetclinic.model.Owner;
+import gunsnhoney.sfpetclinic.model.Pet;
 import gunsnhoney.sfpetclinic.model.PetType;
 import gunsnhoney.sfpetclinic.model.Vet;
 import gunsnhoney.sfpetclinic.service.OwnerService;
@@ -8,6 +9,8 @@ import gunsnhoney.sfpetclinic.service.PetTypeService;
 import gunsnhoney.sfpetclinic.service.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -36,17 +39,47 @@ public class DataLoader implements CommandLineRunner {
         PetType savedBirdType = petTypeService.save(bird);
 
 
-        Owner owner1 = new Owner();
-        owner1.setFirstName("Carl");
-        owner1.setLastName("Perkins");
+        Owner carl = new Owner();
+        carl.setFirstName("Carl");
+        carl.setLastName("Perkins");
+        carl.setAddress("333 Wafting in Glory Lane");
+        carl.setCity("Oclare");
+        carl.setTelephone("333 555 2212");
+        Pet carlsDog = new Pet();
+        carlsDog.setName("Fido");
+        carlsDog.setBirthDate(LocalDate.now());
+        carlsDog.setType(savedDogType);
+        carlsDog.setOwner(carl);
+        carl.addPet(carlsDog);
+        ownerService.save(carl);
 
-        ownerService.save(owner1);
-
-        Owner owner2 = new Owner();
-        owner2.setFirstName("Sara");
-        owner2.setLastName("Smith");
-
-        ownerService.save(owner2);
+        Owner sara = new Owner();
+        sara.setFirstName("Sara");
+        sara.setLastName("Smith");
+        sara.setAddress("666 Clueless Road");
+        sara.setCity("Denver");
+        sara.setTelephone("333 444 8888");
+        Pet sarasCat = new Pet();
+        sarasCat.setName("Fluffy");
+        sarasCat.setBirthDate(LocalDate.now());
+        sarasCat.setType(savedDogType);
+        sarasCat.setOwner(sara);
+        sara.addPet(sarasCat);
+        Pet saraBird = new Pet();
+        saraBird.setName("CatFood");
+        saraBird.setBirthDate(LocalDate.now());
+        saraBird.setType(savedBirdType);
+        saraBird.setOwner(sara);
+        sara.addPet(saraBird);
+        Pet saraHorse = new Pet();
+        saraHorse.setName("Winnie");
+        saraHorse.setBirthDate(LocalDate.now());
+        PetType horse = new PetType();
+        horse.setName("Horse");
+        saraHorse.setType(horse);
+        saraHorse.setOwner(sara);
+        sara.addPet(saraHorse);
+        ownerService.save(sara);
         System.out.println("Loading Owners ....");
 
         Vet vet1 = new Vet();

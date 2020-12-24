@@ -1,9 +1,10 @@
 package gunsnhoney.sfpetclinic.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Vet extends Person {
-    private Set<Specialty> specialties;
+    private final Set<Specialty> specialties = new HashSet<>();
 
     public Set<Specialty> getSpecialties() {
         return specialties;
