@@ -8,6 +8,7 @@ import java.util.Set;
 @Table(name = "owners")
 public class Owner extends Person {
 
+    //this.to.that
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private final Set<Pet> pets = new HashSet<>();
     @Column(name = "address")

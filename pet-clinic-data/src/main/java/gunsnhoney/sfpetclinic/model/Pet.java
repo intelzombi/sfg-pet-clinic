@@ -17,6 +17,7 @@ public class Pet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private PetType type;
+    //this.to.that
     @ManyToOne()
     @JoinColumn(name = "owner_id")
     private Owner owner;
