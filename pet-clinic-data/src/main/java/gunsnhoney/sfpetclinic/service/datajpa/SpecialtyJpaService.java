@@ -20,9 +20,9 @@ public class SpecialtyJpaService implements SpecialtyService {
 
     @Override
     public Set<Specialty> findAll() {
-        Set<Specialty> specialtys = new HashSet<>();
-        specialtyRepository.findAll().forEach(specialtys::add);
-        return specialtys;
+        Set<Specialty> specialties = new HashSet<>();
+        specialtyRepository.findAll().forEach(specialties::add);
+        return specialties;
     }
 
     @Override
