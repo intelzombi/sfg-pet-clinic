@@ -5,7 +5,10 @@ import gunsnhoney.sfpetclinic.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -25,6 +28,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         if (petTypeService.findAll().isEmpty()) {
             loadData();
@@ -39,31 +43,28 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadData() {
-        PetType dog = new PetType();
-        dog.setName("Dog");
-        PetType savedDogType = petTypeService.save(dog);
-        PetType cat = new PetType();
-        cat.setName("Cat");
-        PetType savedCatType = petTypeService.save(cat);
-        PetType bird = new PetType();
-        bird.setName("Bird");
-        PetType savedBirdType = petTypeService.save(bird);
-        PetType horse = new PetType();
-        horse.setName("Horse");
-        PetType saveHorseType = petTypeService.save(horse);
 
-        Owner carl = new Owner();
-        carl.setFirstName("Carl");
-        carl.setLastName("Perkins");
-        carl.setAddress("333 Wafting in Glory Lane");
-        carl.setCity("Oclare");
-        carl.setTelephone("333 555 2212");
-        Pet carlsDog = new Pet();
-        carlsDog.setName("Fido");
-        carlsDog.setBirthDate(LocalDate.now());
-        carlsDog.setType(savedDogType);
-        carlsDog.setOwner(carl);
+        PetType savedDogType = petTypeService.save(PetType.builder().name("Dog").build());
+        PetType savedCatType = petTypeService.save(PetType.builder().name("Cat").build());
+        PetType savedBirdType = petTypeService.save(PetType.builder().name("Bird").build());
+        PetType saveHorseType = petTypeService.save(PetType.builder().name("Horse").build());
+
+        Owner carl = Owner.builder()
+                .firstName("Carl")
+                .lastName("Perkins")
+                .address("333 Wafting in Glory Lane")
+                .city("Oclare")
+                .telephone("333 555 2212")
+                .build();
+        Pet carlsDog = Pet.builder()
+                .name("Fido")
+                .birthDate(LocalDate.now())
+                .type(savedDogType)
+                .owner(carl)
+                .build();
         carl.addPet(carlsDog);
+        Set<Pet> carlsPets = new HashSet<>();
+        carlsPets.add(carlsDog);
         ownerService.save(carl);
 
         Visit fidoVisit = new Visit();
