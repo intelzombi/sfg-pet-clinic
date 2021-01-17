@@ -43,6 +43,7 @@ public class OwnerJpaService implements OwnerService {
 
     @Override
     public Owner save(Owner object) {
+        object.getPets().forEach(petRepository::save);
         return ownerRepository.save(object);
     }
 

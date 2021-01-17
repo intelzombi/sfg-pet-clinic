@@ -49,22 +49,23 @@ public class DataLoader implements CommandLineRunner {
         PetType savedBirdType = petTypeService.save(PetType.builder().name("Bird").build());
         PetType saveHorseType = petTypeService.save(PetType.builder().name("Horse").build());
 
+        Set<Pet> carlsPets = new HashSet<>();
+        Pet carlsDog = Pet.builder()
+                .name("Fido")
+                .birthDate(LocalDate.now())
+                .type(savedDogType)
+                .build();
+
+        carlsPets.add(carlsDog);
         Owner carl = Owner.builder()
                 .firstName("Carl")
                 .lastName("Perkins")
                 .address("333 Wafting in Glory Lane")
                 .city("Oclare")
                 .telephone("333 555 2212")
+                .pets(carlsPets)
                 .build();
-        Pet carlsDog = Pet.builder()
-                .name("Fido")
-                .birthDate(LocalDate.now())
-                .type(savedDogType)
-                .owner(carl)
-                .build();
-        carl.addPet(carlsDog);
-        Set<Pet> carlsPets = new HashSet<>();
-        carlsPets.add(carlsDog);
+
         ownerService.save(carl);
 
         Visit fidoVisit = new Visit();
@@ -73,30 +74,34 @@ public class DataLoader implements CommandLineRunner {
         fidoVisit.setDate(LocalDate.now());
         visitService.save(fidoVisit);
 
-        Owner sara = new Owner();
-        sara.setFirstName("Sara");
-        sara.setLastName("Smith");
-        sara.setAddress("666 Clueless Road");
-        sara.setCity("Denver");
-        sara.setTelephone("333 444 8888");
-        Pet sarasCat = new Pet();
-        sarasCat.setName("Fluffy");
-        sarasCat.setBirthDate(LocalDate.now());
-        sarasCat.setType(savedCatType);
-        sarasCat.setOwner(sara);
-        sara.addPet(sarasCat);
-        Pet saraBird = new Pet();
-        saraBird.setName("CatFood");
-        saraBird.setBirthDate(LocalDate.now());
-        saraBird.setType(savedBirdType);
-        saraBird.setOwner(sara);
-        sara.addPet(saraBird);
-        Pet saraHorse = new Pet();
-        saraHorse.setName("Winnie");
-        saraHorse.setBirthDate(LocalDate.now());
-        saraHorse.setType(saveHorseType);
-        saraHorse.setOwner(sara);
-        sara.addPet(saraHorse);
+        Set<Pet> sarasPets = new HashSet<>();
+        Pet sarasCat = Pet.builder()
+                .name("Fluffy")
+                .birthDate(LocalDate.now())
+                .type(savedCatType)
+                .build();
+        sarasPets.add(sarasCat);
+        Pet saraBird = Pet.builder()
+                .name("CatFood")
+                .birthDate(LocalDate.now())
+                .type(savedBirdType)
+                .build();
+        sarasPets.add(saraBird);
+        Pet saraHorse = Pet.builder()
+                .name("Winnie")
+                .birthDate(LocalDate.now())
+                .type(saveHorseType)
+                .build();
+        sarasPets.add(saraHorse);
+        Owner sara = Owner.builder().
+                firstName("Sara")
+                .lastName("Smith")
+                .address("666 Clueless Road")
+                .city("Denver")
+                .telephone("333 444 8888")
+                .pets(sarasPets)
+                .build();
+
         ownerService.save(sara);
         System.out.println("Loading Owners ....");
 
