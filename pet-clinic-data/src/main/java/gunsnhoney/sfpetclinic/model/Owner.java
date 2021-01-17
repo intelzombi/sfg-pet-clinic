@@ -22,6 +22,9 @@ public class Owner extends Person {
         this.address = address;
         this.city = city;
         this.telephone = telephone;
+        pets.forEach(pet -> {
+            pet.setOwner(this);
+        });
         this.pets.addAll(pets);
     }
 
